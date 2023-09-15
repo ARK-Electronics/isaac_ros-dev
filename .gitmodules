@@ -1,0 +1,12 @@
+[submodule "src/isaac_ros_common"]
+	path = src/isaac_ros_common
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common
+[submodule "src/isaac_ros_nitros"]
+	path = src/isaac_ros_nitros
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nitros
+[submodule "src/isaac_ros_image_pipeline"]
+	path = src/isaac_ros_image_pipeline
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_image_pipeline
+[submodule "src/isaac_ros_argus_camera"]
+	path = src/isaac_ros_argus_camera
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_argus_camera
