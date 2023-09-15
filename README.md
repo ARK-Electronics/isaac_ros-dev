@@ -52,7 +52,7 @@ git lfs install --skip-repo
 1. Clone the workspace:
 ```
 mkdir -p  ~/workspaces/
-git clone --recurse-submodules git@github.com:ARK-Electronics/isaac_ros-dev.git ~/workspaces/
+git clone --recurse-submodules git@github.com:ARK-Electronics/isaac_ros-dev.git ~/workspaces/isaac_ros-dev/
 ```
 
 2. Update your ~/.bashrc:
@@ -80,9 +80,7 @@ cd ~/workspaces/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh
 ```
 
 If all goes well, you should now find yourself inside of a docker container configured for development.
-```
-admin@jake-nvidia:/workspaces/isaac_ros-dev$
-```
+> admin@jake-nvidia:/workspaces/isaac_ros-dev$
 
 ## Running an example
 If you've completed the steps above without errors, you're ready to run the first example.
@@ -91,7 +89,7 @@ If you've completed the steps above without errors, you're ready to run the firs
 ```
 cd ~/workspaces/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh
 ```
-Build and source the workspace:
+Build the packages and source the workspace, this may take some time:
 ```
 cd /workspaces/isaac_ros-dev && \
   colcon build --symlink-install && \
@@ -106,4 +104,11 @@ colcon test --executor sequential
 3. Run the following launch files to spin up a demo of the isaac_ros_argus_camera package:
 ```
 ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
+```
+
+### Issues
+#### Argus fails to create capture session
+Exit the Docker container and restart the nvargus daemon:
+```
+sudo systemctl restart nvargus-daemon.service
 ```
