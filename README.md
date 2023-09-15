@@ -107,8 +107,17 @@ ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
 ```
 
 ### Issues
-#### Argus fails to create capture session
+
+### Failed to create capture session
+The Isaac ROS Argus node can fail to create a capture session inside the container after the nvargus daemon has crashed. By default, the  nvargus daemon is running in background, but it may crash due to other Argus clients. This will prevent Argus camera nodes from creating  capture sessions.
+#### Solution
 Exit the Docker container and restart the nvargus daemon:
 ```
 sudo systemctl restart nvargus-daemon.service
 ```
+
+### Failed to get calibration data from Argus!
+If there is no available calibration data for an Argus camera, you will see warning messages similar to:
+> WARN  extensions/hawk/argus_camera.cpp@677: Failed to get calibration data from Argus!
+#### Solution
+TODO
