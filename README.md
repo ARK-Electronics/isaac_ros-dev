@@ -1,7 +1,7 @@
 ## Prerequisites
 These instructions are based on kernel version 35.3.1 and Jetpack 5.1.1
 
-If you have not already installed the custom device tree binary. Please see [setting up the Jetson](https://google.com).
+If you have not already installed the OS with the custom device tree. Please see [Installing the OS from binaries](https://github.com/ARK-Electronics/ark_jetson_core#installing-the-os-from-binaries).
 
 1. Install Jetpack:
 ```
