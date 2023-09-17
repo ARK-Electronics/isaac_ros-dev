@@ -69,41 +69,31 @@ source ~/.bashrc
 If all goes well, you should now find yourself inside of a docker container configured for development.
 > admin@jake-nvidia:/workspaces/isaac_ros-dev$
 
-## Running an example
-If you've completed the steps above without errors, you're ready to run the first example.
+## Running argus_camera node
 
-1. Start the docker container if you haven't already:
+1. Start the docker container:
 ```
 ./run_docker.sh
 ```
-Update package dependencies, rosdep will look for package.xml files in your workspace and install dependencies as needed using apt:
-```
-rosdep update
-rosdep install --from-paths src/ --ignore-src -r -y
-```
-Build the packages and source the workspace, this may take some time:
+Build the packages and source the workspace:
 ```
 cd /workspaces/isaac_ros-dev && \
   colcon build --symlink-install && \
   source install/setup.bash
 ```
 
-2. (Optional) Run tests to verify complete and correct installation:
-```
-colcon test --executor sequential
-```
-
-3. Run the following launch files to spin up a demo of the isaac_ros_argus_camera package:
+2. Run the following launch files to spin up a demo of the isaac_ros_argus_camera package:
 ```
 ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
 ```
 
-## Testing a camera with gstreamer
+## Testing the camera with gstreamer
 
-If building the workspace was successful you can check the list of provided gstreamer elements from the **gst_bridge** package.
+1. Enter the container and source the workspace.
+
+2. (Optional) Check that the gstreamer elements from the **gst_bridge** package were sucessfully build:
 ```
-gst-inspect-1.0 install/
-/lib/gst_bridge/librosgstbridge.so
+gst-inspect-1.0 install/gst_bridge/lib/gst_bridge/librosgstbridge.so
 ```
 > Plugin Details:
 >   Name                     rosgstbridge
@@ -125,24 +115,16 @@ gst-inspect-1.0 install/
 >   6 features:
 >   +-- 6 elements
 
-
-<!-- ros source -->
-gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/left/image_raw" ! nvvidconv ! xvimagesink
-
-<!-- Host -->
-gst-launch-1.0 nvarguscamerasrc ! 'video/x-raw(memory:NVMM),width=1920,height=1080,framerate=30/1' ! nvvidconv ! "video/x-raw,format=I420" ! queue ! x264enc bitrate=2000 tune=zerolatency speed-preset=fast ! "video/x-h264,stream-format=byte-stream" ! h264parse ! rtph264pay ! udpsink host=192.168.0.16 port=5600
-<!-- Client -->
+3. Start the gstreamer pipelines. Replace `udpsink host=192.168.0.16` with your IP.
+*Host*
+```
+gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/image_raw" ! queue max-size-buffers=1 ! videoconvert ! "video/x-raw,format=I420" ! x264enc bitrate=2000 tune=zerolatency speed-preset=ultrafast ! "video/x-h264,stream-format=byte-stream" ! rtph264pay config-interval=1 pt=96 ! udpsink host=192.168.0.16 port=5600 sync=false
+```
+*Client*
+```
 gst-launch-1.0 udpsrc port=5600 ! application/x-rtp ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink
 
-
-<!-- works -->
-gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/image_raw" ! queue max-size-buffers=1 ! videoconvert ! "video/x-raw,format=I420" ! x264enc bitrate=2000 tune=zerolatency speed-preset=fast ! "video/x-h264,stream-format=byte-stream" ! rtph264pay config-interval=1 pt=96 ! udpsink host=192.168.0.16 port=5600 sync=false
-
-
-gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/image_raw" ! queue ! videoconvert ! "video/x-raw,format=I420" ! queue ! x264enc bitrate=8000 tune=zerolatency speed-preset=fast ! video/x-h264,stream-format=byte-stream ! queue ! rtph264pay ! udpsink host=192.168.0.16 port=5600 sync=false
-
-
----
+```
 
 ### Issues
 
