@@ -1,0 +1,4 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+RUN echo "Test of our custom dockerfile"
