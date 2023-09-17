@@ -13,3 +13,6 @@
 [submodule "src/ros-gst-bridge"]
 	path = src/ros-gst-bridge
 	url = git@github.com:BrettRD/ros-gst-bridge.git
+[submodule "src/isaac_ros_compression"]
+	path = src/isaac_ros_compression
+	url = git@github.com:NVIDIA-ISAAC-ROS/isaac_ros_compression.git

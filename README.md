@@ -89,6 +89,11 @@ If you've completed the steps above without errors, you're ready to run the firs
 ```
 cd ~/workspaces/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh
 ```
+Update package dependencies, rosdep will look for package.xml files in your workspace and install dependencies as needed using apt:
+```
+rosdep update
+rosdep install --from-paths src/ --ignore-src -r -y
+```
 Build the packages and source the workspace, this may take some time:
 ```
 cd /workspaces/isaac_ros-dev && \
@@ -105,6 +110,38 @@ colcon test --executor sequential
 ```
 ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
 ```
+
+## Testing a camera with gstreamer
+
+If building the workspace was successful you can check the list of provided gstreamer elements from the **gst_bridge** package.
+```
+gst-inspect-1.0 install/
+/lib/gst_bridge/librosgstbridge.so
+```
+> Plugin Details:
+>   Name                     rosgstbridge
+>   Description              ROS topic bridge elements
+>   Filename                 install/gst_bridge/lib/gst_bridge/librosgstbridge.so
+>   Version                  0.0.0
+>   License                  LGPL
+>   Source module            ros_gst_bridge
+>   Binary package           ros_gst_bridge
+>   Origin URL               https://github.com/BrettRD/ros-gst-bridge
+>
+>   rosaudiosink: rosaudiosink
+>   rosimagesink: rosimagesink
+>   rostextsink: rostextsink
+>   rosaudiosrc: rosaudiosrc
+>   rosimagesrc: rosimagesrc
+>   rostextsrc: rostextsrc
+>
+>   6 features:
+>   +-- 6 elements
+
+
+gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/left/image_raw" ! nvvidconv ! xvimagesink
+
+---
 
 ### Issues
 
