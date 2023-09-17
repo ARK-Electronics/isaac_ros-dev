@@ -10,3 +10,6 @@
 [submodule "src/isaac_ros_argus_camera"]
 	path = src/isaac_ros_argus_camera
 	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_argus_camera
+[submodule "src/ros-gst-bridge"]
+	path = src/ros-gst-bridge
+	url = git@github.com:BrettRD/ros-gst-bridge.git
