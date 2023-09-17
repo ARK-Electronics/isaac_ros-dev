@@ -2,3 +2,9 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
 RUN echo "Test of our custom dockerfile"
+
+RUN echo "see if this works1"
+
+RUN rosdep update && rosdep install --from-paths src/ --ignore-src -r -y
+
+RUN echo "see if this works2"
