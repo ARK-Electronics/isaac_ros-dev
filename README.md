@@ -61,22 +61,9 @@ echo "export ISAAC_ROS_WS=${HOME}/workspaces/isaac_ros-dev/" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-3. Disable buildkit since it errors out. Open this file and add this line:
+3. Start the docker container for the first time. This will download a lot of images so be prepared to wait:
 ```
-cd ~/workspaces/isaac_ros-dev/src/isaac_ros_common/scripts/
-nano build_base_image.sh
-```
-``` diff
-      print_warning "Building ${DOCKERFILE} as image: ${IMAGE_NAME} with base: ${BASE_IMAGE_NAME}"
-
-+     DOCKER_BUILDKIT=0
-      DOCKER_BUILDKIT=${DOCKER_BUILDKIT} docker build -f ${DOCKERFILE} \
-
-```
-
-4. Start the docker container for the first time. This will download a lot of images so be prepared to wait:
-```
-cd ~/workspaces/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh
+./run_docker.sh
 ```
 
 If all goes well, you should now find yourself inside of a docker container configured for development.
@@ -87,7 +74,7 @@ If you've completed the steps above without errors, you're ready to run the firs
 
 1. Start the docker container if you haven't already:
 ```
-cd ~/workspaces/isaac_ros-dev/src/isaac_ros_common && ./scripts/run_dev.sh
+./run_docker.sh
 ```
 Update package dependencies, rosdep will look for package.xml files in your workspace and install dependencies as needed using apt:
 ```
@@ -139,7 +126,21 @@ gst-inspect-1.0 install/
 >   +-- 6 elements
 
 
+<!-- ros source -->
 gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/left/image_raw" ! nvvidconv ! xvimagesink
+
+<!-- Host -->
+gst-launch-1.0 nvarguscamerasrc ! 'video/x-raw(memory:NVMM),width=1920,height=1080,framerate=30/1' ! nvvidconv ! "video/x-raw,format=I420" ! queue ! x264enc bitrate=2000 tune=zerolatency speed-preset=fast ! "video/x-h264,stream-format=byte-stream" ! h264parse ! rtph264pay ! udpsink host=192.168.0.16 port=5600
+<!-- Client -->
+gst-launch-1.0 udpsrc port=5600 ! application/x-rtp ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink
+
+
+<!-- works -->
+gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/image_raw" ! queue max-size-buffers=1 ! videoconvert ! "video/x-raw,format=I420" ! x264enc bitrate=2000 tune=zerolatency speed-preset=fast ! "video/x-h264,stream-format=byte-stream" ! rtph264pay config-interval=1 pt=96 ! udpsink host=192.168.0.16 port=5600 sync=false
+
+
+gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/image_raw" ! queue ! videoconvert ! "video/x-raw,format=I420" ! queue ! x264enc bitrate=8000 tune=zerolatency speed-preset=fast ! video/x-h264,stream-format=byte-stream ! queue ! rtph264pay ! udpsink host=192.168.0.16 port=5600 sync=false
+
 
 ---
 
