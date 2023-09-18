@@ -45,8 +45,6 @@ sudo apt-get install git-lfs
 git lfs install --skip-repo
 ```
 
----
-
 ## Getting started with Isaac ROS2 on the Jetson
 
 1. Clone the workspace:
@@ -69,7 +67,7 @@ source ~/.bashrc
 If all goes well, you should now find yourself inside of a docker container configured for development.
 > admin@jake-nvidia:/workspaces/isaac_ros-dev$
 
-## Running argus_camera node
+## Running argus_camera node with gstreamer
 
 1. Start the docker container:
 ```
@@ -87,35 +85,12 @@ cd /workspaces/isaac_ros-dev && \
 ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
 ```
 
-## Testing the camera with gstreamer
+<!-- 2. (Optional) Check that the gstreamer elements from the **gst_bridge** package were sucessfully build: -->
+<!-- gst-inspect-1.0 install/gst_bridge/lib/gst_bridge/librosgstbridge.so -->
 
-1. Enter the container and source the workspace.
+3. Start the gstreamer pipelines. Replace `udpsink host=192.168.0.16` with your development machines IP. This assumes
+both the development machine and Jetson are connected on the same network. <br>
 
-2. (Optional) Check that the gstreamer elements from the **gst_bridge** package were sucessfully build:
-```
-gst-inspect-1.0 install/gst_bridge/lib/gst_bridge/librosgstbridge.so
-```
-> Plugin Details:
->   Name                     rosgstbridge
->   Description              ROS topic bridge elements
->   Filename                 install/gst_bridge/lib/gst_bridge/librosgstbridge.so
->   Version                  0.0.0
->   License                  LGPL
->   Source module            ros_gst_bridge
->   Binary package           ros_gst_bridge
->   Origin URL               https://github.com/BrettRD/ros-gst-bridge
->
->   rosaudiosink: rosaudiosink
->   rosimagesink: rosimagesink
->   rostextsink: rostextsink
->   rosaudiosrc: rosaudiosrc
->   rosimagesrc: rosimagesrc
->   rostextsrc: rostextsrc
->
->   6 features:
->   +-- 6 elements
-
-3. Start the gstreamer pipelines. Replace `udpsink host=192.168.0.16` with your IP.
 *Host*
 ```
 gst-launch-1.0 --gst-plugin-path=install/gst_bridge/lib/gst_bridge/ rosimagesrc ros-topic="/image_raw" ! queue max-size-buffers=1 ! videoconvert ! "video/x-raw,format=I420" ! x264enc bitrate=2000 tune=zerolatency speed-preset=ultrafast ! "video/x-h264,stream-format=byte-stream" ! rtph264pay config-interval=1 pt=96 ! udpsink host=192.168.0.16 port=5600 sync=false
@@ -126,7 +101,7 @@ gst-launch-1.0 udpsrc port=5600 ! application/x-rtp ! rtph264depay ! avdec_h264 
 
 ```
 
-### Issues
+## Troubleshooting
 
 ### Failed to create capture session
 The Isaac ROS Argus node can fail to create a capture session inside the container after the nvargus daemon has crashed. By default, the  nvargus daemon is running in background, but it may crash due to other Argus clients. This will prevent Argus camera nodes from creating  capture sessions.
