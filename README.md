@@ -132,7 +132,9 @@ both the development machine and Jetson are connected on the same network. <br>
     ./run_docker.sh
     ```
 
-6. Once container image is rebuilt and you are inside the container, you can run `realsense-viewer` to check that the RealSense camera is connected.
+6. Before trying to use the realsense, ensure it's firmware is `5.13.0.50`. You can update the firmware by following the [Realsense documentation](https://dev.intelrealsense.com/docs/firmware-update-tool). You must use USB3 to update the realsense firmware. USB3 is also reccomended for operation due to the increased data rate.
+
+7. Once container image is rebuilt and you are inside the container, you can run `realsense-viewer` to check that the RealSense camera is connected.
 
    ```bash
    realsense-viewer
