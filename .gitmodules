@@ -17,3 +17,6 @@
 	path = src/ros-gst-bridge
 	url = git@github.com:BrettRD/ros-gst-bridge.git
 	branch = ros2
+[submodule "src/isaac_ros_visual_slam"]
+	path = src/isaac_ros_visual_slam
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_visual_slam.git
