@@ -17,3 +17,4 @@ RUN apt-get update && apt-get install -y \
         libgstreamer-plugins-good1.0-0 \
         libgstreamer1.0-dev \
         libgstreamer-plugins-base1.0-dev \
+        libwebsocketpp-dev \

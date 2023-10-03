@@ -1,7 +1,7 @@
 ## Prerequisites
 These instructions are based on kernel version 35.3.1 and Jetpack 5.1.1
 
-If you have not already installed the OS with the custom device tree. Please see [Installing the OS from binaries](https://github.com/ARK-Electronics/ark_jetson_core#installing-the-os-from-binaries).
+If you have not already installed the OS with the custom device tree. Please see [Installing the OS from binaries](https://github.com/ARK-Electronics/ark_jetson_kernel#installing-the-os-from-binaries).
 
 1. Install Jetpack:
     ```bash
@@ -78,8 +78,8 @@ If all goes well, you should now find yourself inside of a docker container conf
     cd /workspaces/isaac_ros-dev && \
     colcon build --symlink-install && \
     source install/setup.bash
-    ```
-
+    ``
+`
 2. Run the following launch files to spin up a demo of the isaac_ros_argus_camera package:
     ```bash
     ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
@@ -142,6 +142,16 @@ both the development machine and Jetson are connected on the same network. <br>
 
    If you turn on the "Stereo Module" in the GUI, you should see something like the following:
 
+## Bridging uORB with ROS2
+If you want to bridge PX4 topics (uORB) to ROS2 topics you can use the Micro-XRCE-DDS-Agent
+```
+sudo snap install micro-xrce-dds-agent --edge
+```
+To start the agent
+```
+micro-xrce-dds-agent udp4 -p 8888
+```
+
 ## Troubleshooting
 
 ### Failed to create capture session
@@ -156,4 +166,23 @@ sudo systemctl restart nvargus-daemon.service
 If there is no available calibration data for an Argus camera, you will see warning messages similar to:
 > WARN  extensions/hawk/argus_camera.cpp@677: Failed to get calibration data from Argus!
 #### Solution
-TODO
+Calibrate the cameras <br>
+https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common/blob/main/docs/camera-calibration.md <br>
+
+<!-- ###
+
+#### Solution
+pip install opencv-python --force-reinstall
+
+
+> please download MMAPI via APT server, for example, $ sudo apt install nvidia-l4t-jetson-multimedia-api
+> then, you should see the Argus sample, /usr/src/jetson_multimedia_api/argus/samples/syncSensor/
+> this is the sample code to enable 2 synchronized sensors and compute the disparity.
+> besides,
+> you’ll need to have frame-sync pin on the hardware side to ensure the frame synchronized.
+> please may check similar discussion threads, please see-also Topic 1070823 13 for reference. thanks
+
+To install:
+```
+sudo apt install nvidia-l4t-jetson-multimedia-api
+``` -->
