@@ -20,3 +20,15 @@
 [submodule "src/isaac_ros_visual_slam"]
 	path = src/isaac_ros_visual_slam
 	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_visual_slam.git
+[submodule "src/px4_msgs"]
+	path = src/px4_msgs
+	url = https://github.com/PX4/px4_msgs.git
+[submodule "src/-b"]
+	path = src/-b
+	url = https://github.com/IntelRealSense/realsense-ros.git
+[submodule "src/realsense-ros"]
+	path = src/realsense-ros
+	url = https://github.com/IntelRealSense/realsense-ros.git
+[submodule "src/ros-foxglove-bridge"]
+	path = src/ros-foxglove-bridge
+	url = https://github.com/foxglove/ros-foxglove-bridge.git
