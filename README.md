@@ -122,7 +122,7 @@ both the development machine and Jetson are connected on the same network. <br>
     ```
     ```diff
     -CONFIG_IMAGE_KEY="ros2_humble.user.ark"
-    +CONFIG_IMAGE_KEY="ros2_humble.user.ark.realsense"
+    +CONFIG_IMAGE_KEY="ros2_humble.user.realsense.ark"
     CONFIG_DOCKER_SEARCH_DIRS=($HOME/workspaces/isaac_ros-dev)
     ```
 
