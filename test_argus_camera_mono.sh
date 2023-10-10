@@ -1,1 +1,2 @@
+source install/setup.bash
 ros2 launch isaac_ros_argus_camera isaac_ros_argus_camera_mono.launch.py
