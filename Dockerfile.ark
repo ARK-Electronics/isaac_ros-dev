@@ -6,6 +6,7 @@ RUN echo "Running ARK dockerfile"
 # gst-ros-bridge dependencies
 # TODO: why doesn't rosdep install these?
 RUN apt-get update && apt-get install -y \
+        apt-utils \
         python3-pytest \
         gstreamer1.0-tools \
         libgstreamer1.0-0 \
