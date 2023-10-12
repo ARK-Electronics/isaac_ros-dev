@@ -135,6 +135,7 @@ fi
 # Run container from image
 print_info "Running $CONTAINER_NAME"
 docker run \
+	--detach \
     --privileged \
     --network host \
     ${DOCKER_ARGS[@]} \
