@@ -1,6 +1,6 @@
 [submodule "src/isaac_ros_common"]
 	path = src/isaac_ros_common
-	url = https://github.com/ARK-Electronics/isaac_ros_common
+	url = git@github.com:ARK-Electronics/isaac_ros_common.git
 [submodule "src/isaac_ros_nitros"]
 	path = src/isaac_ros_nitros
 	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nitros
