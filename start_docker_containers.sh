@@ -136,6 +136,7 @@ fi
 print_info "Running $CONTAINER_NAME"
 docker run \
 	--detach \
+	--rm \
     --privileged \
     --network host \
     ${DOCKER_ARGS[@]} \
