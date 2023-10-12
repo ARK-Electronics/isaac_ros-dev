@@ -134,6 +134,9 @@ fi
 
 # Run container from image
 print_info "Running $CONTAINER_NAME"
+print_info "this is "
+echo $@
+
 docker run \
 	--detach \
 	--rm \
@@ -146,11 +149,10 @@ docker run \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
-    --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
     --workdir /workspaces/isaac_ros-dev \
     $@ \
     $BASE_NAME \
-    /bin/bash
+    tail -f
 
 # Attach to running container
 echo "Attaching to running container"
