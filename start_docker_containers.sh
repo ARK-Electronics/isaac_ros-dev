@@ -154,10 +154,10 @@ docker run \
 
 # Attach to running container
 echo "Attaching to running container"
-docker exec -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/vslam_realsense.sh
+docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/vslam_realsense.sh
 
 # Attach to running container
 echo "Attaching to running container"
-docker exec -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/foxglove.sh
+docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/foxglove.sh
 
 echo "Containers started, exiting."
