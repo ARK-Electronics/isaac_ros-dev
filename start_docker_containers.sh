@@ -150,7 +150,6 @@ docker run \
     --runtime nvidia \
     --user="admin" \
     --workdir /workspaces/isaac_ros-dev \
-    $@ \
     $BASE_NAME \
     tail -f
 
