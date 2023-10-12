@@ -29,4 +29,4 @@
 	branch = 4.51.1
 [submodule "src/ros-foxglove-bridge"]
 	path = src/ros-foxglove-bridge
-	url = https://github.com/foxglove/ros-foxglove-bridge.git
+	url = git@github.com:ARK-Electronics/ros-foxglove-bridge.git
