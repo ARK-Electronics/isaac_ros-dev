@@ -134,8 +134,6 @@ fi
 
 # Run container from image
 print_info "Running $CONTAINER_NAME"
-print_info "this is "
-echo $@
 
 docker run \
 	--detach \
@@ -154,11 +152,15 @@ docker run \
     tail -f
 
 # Attach to running container
-echo "Attaching to running container"
+echo "Attaching to running container: VSLAM"
 docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/vslam_realsense.sh
 
 # Attach to running container
-echo "Attaching to running container"
+echo "Attaching to running container: Foxglove"
 docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/foxglove.sh
 
-echo "Containers started, exiting."
+# Attach to running container
+echo "Attaching to running container: gstreamer"
+docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/gstreamer.sh
+
+echo "Processes started, exiting."

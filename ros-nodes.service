@@ -6,7 +6,7 @@ After=syslog.target network-online.target
 [Service]
 User=jake
 Type=simple
-ExecStart=/home/jake/workspaces/isaac_ros-dev/start_docker_containers.sh
+ExecStart=/home/jake/workspaces/isaac_ros-dev/start_ros_nodes.sh
 Restart=on-failure
 RestartSec=5
 KillMode=process
