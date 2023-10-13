@@ -1,0 +1,14 @@
+[Unit]
+Description=Launches the ROS2 nodes
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+ExecStart=$HOME/workspaces/isaac_ros-dev/start_docker_containers.sh
+Restart=on-failure
+RestartSec=5
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
