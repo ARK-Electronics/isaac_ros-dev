@@ -4,6 +4,7 @@ Wants=network.target
 After=syslog.target network-online.target
 
 [Service]
+User=jake
 Type=simple
 ExecStart=/home/jake/workspaces/isaac_ros-dev/start_docker_containers.sh
 Restart=on-failure
