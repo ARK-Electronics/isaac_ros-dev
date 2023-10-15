@@ -132,6 +132,11 @@ if [[ -f "$DOCKER_ARGS_FILE" ]]; then
     done
 fi
 
+
+# Setup ROS2 environment
+echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
+source /opt/ros/${ROS_DISTRO}/setup.bash
+
 # Run container from image
 print_info "Running $CONTAINER_NAME"
 
