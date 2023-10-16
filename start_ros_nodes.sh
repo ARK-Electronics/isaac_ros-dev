@@ -154,7 +154,7 @@ docker run \
     --user="admin" \
     --workdir /workspaces/isaac_ros-dev \
     $BASE_NAME \
-    tail -f
+    start_docker.sh
 
 # Attach to running container
 echo "Attaching to running container: VSLAM"
