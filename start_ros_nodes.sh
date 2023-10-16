@@ -147,9 +147,10 @@ docker run \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
+    --entrypoint $PWD/start_docker.sh \
     --workdir /workspaces/isaac_ros-dev \
     $BASE_NAME \
-    tail -f
+    /bin/bash
 
 # Attach to running container
 echo "Attaching to running container: VSLAM"
