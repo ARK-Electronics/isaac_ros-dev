@@ -132,11 +132,6 @@ if [[ -f "$DOCKER_ARGS_FILE" ]]; then
     done
 fi
 
-
-# Setup ROS2 environment
-echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
-source /opt/ros/${ROS_DISTRO}/setup.bash
-
 # Run container from image
 print_info "Running $CONTAINER_NAME"
 
@@ -154,7 +149,7 @@ docker run \
     --user="admin" \
     --workdir /workspaces/isaac_ros-dev \
     $BASE_NAME \
-    start_docker.sh
+    $PWD/start_docker.sh
 
 # Attach to running container
 echo "Attaching to running container: VSLAM"
