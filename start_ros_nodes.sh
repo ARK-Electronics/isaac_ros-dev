@@ -160,12 +160,13 @@ docker run \
 echo "Attaching to running container: VSLAM"
 docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/vslam_realsense.sh
 
-# Attach to running container
 echo "Attaching to running container: Foxglove"
 docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/foxglove.sh
 
-# Attach to running container
 echo "Attaching to running container: gstreamer"
 docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/gstreamer.sh
+
+echo "Attaching to running container: imu_transform"
+docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/imu_transform.sh
 
 echo "Processes started, exiting."
