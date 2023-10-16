@@ -135,34 +135,36 @@ fi
 # Run container from image
 print_info "Running $CONTAINER_NAME"
 
+CONTAINER_WS_DIR="/workspaces/isaac_ros-dev"
+
 docker run \
 	--detach \
 	--rm \
     --privileged \
     --network host \
     ${DOCKER_ARGS[@]} \
-    -v $ISAAC_ROS_DEV_DIR:/workspaces/isaac_ros-dev \
+    -v $ISAAC_ROS_DEV_DIR:$CONTAINER_WS_DIR \
     -v /dev/*:/dev/* \
     -v /etc/localtime:/etc/localtime:ro \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
-    --entrypoint $PWD/start_docker.sh \
-    --workdir /workspaces/isaac_ros-dev \
+    --entrypoint $CONTAINER_WS_DIR/start_docker.sh \
+    --workdir $CONTAINER_WS_DIR \
     $BASE_NAME \
     /bin/bash
 
 # Attach to running container
 echo "Attaching to running container: VSLAM"
-docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/vslam_realsense.sh
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/vslam_realsense.sh
 
 echo "Attaching to running container: Foxglove"
-docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/foxglove.sh
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/foxglove.sh
 
 echo "Attaching to running container: gstreamer"
-docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/gstreamer.sh
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/gstreamer.sh
 
 echo "Attaching to running container: imu_transform"
-docker exec -d -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /workspaces/isaac_ros-dev/imu_transform.sh
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/imu_transform.sh
 
 echo "Processes started, exiting."
