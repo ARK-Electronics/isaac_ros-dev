@@ -120,8 +120,6 @@ def main():
 
     mav_serialport.write(args.command + '\n')
 
-    time.sleep(0.1)
-
     data = mav_serialport.read(4096)
     while data:
         if data and len(data) > 0:
