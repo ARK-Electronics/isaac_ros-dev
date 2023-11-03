@@ -167,4 +167,7 @@ docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_W
 echo "Attaching to running container: imu_transform"
 docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/imu_transform.sh
 
+echo "Attaching to running container: px4_vslam"
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/px4_vslam.sh
+
 echo "Processes started, exiting."
