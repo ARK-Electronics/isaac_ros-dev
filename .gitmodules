@@ -33,3 +33,6 @@
 [submodule "src/imu_transform"]
 	path = src/imu_transform
 	url = git@github.com:dakejahl/imu_transform.git
+[submodule "src/px4_vslam"]
+	path = src/px4_vslam
+	url = git@github.com:dakejahl/px4_vslam.git
