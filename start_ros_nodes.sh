@@ -149,23 +149,20 @@ docker run \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
-    --entrypoint $CONTAINER_WS_DIR/start_docker.sh \
+    --entrypoint $CONTAINER_WS_DIR/ros-nodes_entrypoint.sh \
     --workdir $CONTAINER_WS_DIR \
     $BASE_NAME \
     /bin/bash
 
 # Attach to running container
 echo "Attaching to running container: VSLAM"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/vslam_realsense.sh
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_vslam_realsense.sh
 
 echo "Attaching to running container: Foxglove"
 docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/foxglove.sh
 
 echo "Attaching to running container: gstreamer"
 docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/gstreamer.sh
-
-echo "Attaching to running container: imu_transform"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/imu_transform.sh
 
 echo "Attaching to running container: px4_vslam"
 docker exec -d -u admin --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/px4_vslam.sh

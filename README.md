@@ -29,7 +29,8 @@ If you have not already installed the OS with the custom device tree. Please see
                 "path": "nvidia-container-runtime",
                 "runtimeArgs": []
             }
-        },
+    -   }
+    +   },
     +   "default-runtime": "nvidia"
     }
     ```
@@ -46,6 +47,8 @@ If you have not already installed the OS with the custom device tree. Please see
     ```
 
 ## Getting started with Isaac ROS2 on the Jetson
+
+First ensure your github user credentials are set and your ssh public key has been added to your github account.
 
 1. Clone the workspace:
     ```bash
@@ -71,5 +74,31 @@ You are now ready to build all of the packages in this workspace. This will take
 ```
 colcon build --symlink-install
 ```
+Once the build is complete exit the docker container, sync the filesystem, and reboot the jetson.
+```
+exit
+sync
+sudo reboot
+```
 
-#### For more tutorials see the [docs](docs/) folder
+## Isaac ROS VSLAM with RealSense D455i and PX4
+These are instructions for setting up the RealSense D455i to use as a full solution for VSLAM integrated with PX4
+
+1. Clone the `librealsense` repo setup udev rules. Remove any connected RealSense cameras when prompted:
+    ```bash
+    cd /tmp && \
+    git clone https://github.com/IntelRealSense/librealsense && \
+    cd librealsense && \
+    ./scripts/setup_udev_rules.sh
+    ```
+
+2. Ensure Realsense 455i firmware is `5.13.0.50`. You can update the firmware by following the [Realsense documentation](https://dev.intelrealsense.com/docs/firmware-update-tool). You must use USB3 to update the realsense firmware. USB3 is also reccomended for operation due to the increased data rate.
+
+3. Copy the **ros-nodes.service** into systemd. This service will launch the **isaac_ros_visual_slam** realsense node, the foxglove bridge, a gstreamer pipeline, and a node to convert the VSLAM solution into the PX4 `vehicle_visual_odometry` message.
+```
+sudo cp ros-nodes.service /etc/systemd/system/ && sudo systemctl enable ros-nodes.service
+```
+4. Enable the service and reboot
+```
+sudo systemctl enable ros-nodes.service && sudo reboot
+```

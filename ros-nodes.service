@@ -4,9 +4,9 @@ Wants=network.target
 After=syslog.target network-online.target
 
 [Service]
-User=jake
+User=jetson
 Type=simple
-ExecStart=/home/jake/workspaces/isaac_ros-dev/start_ros_nodes.sh
+ExecStart=/home/jetson/workspaces/isaac_ros-dev/start_ros_nodes.sh
 Restart=on-failure
 RestartSec=5
 KillMode=process
