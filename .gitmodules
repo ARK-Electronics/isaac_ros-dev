@@ -36,3 +36,6 @@
 [submodule "src/px4_vslam"]
 	path = src/px4_vslam
 	url = git@github.com:dakejahl/px4_vslam.git
+[submodule "src/isaac_ros_nvblox"]
+	path = src/isaac_ros_nvblox
+	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nvblox.git
