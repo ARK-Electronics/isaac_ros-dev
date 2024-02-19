@@ -30,12 +30,6 @@
 [submodule "src/ros-foxglove-bridge"]
 	path = src/ros-foxglove-bridge
 	url = git@github.com:ARK-Electronics/ros-foxglove-bridge.git
-[submodule "src/imu_transform"]
-	path = src/imu_transform
-	url = git@github.com:dakejahl/imu_transform.git
 [submodule "src/px4_vslam"]
 	path = src/px4_vslam
 	url = git@github.com:dakejahl/px4_vslam.git
-[submodule "src/isaac_ros_nvblox"]
-	path = src/isaac_ros_nvblox
-	url = https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nvblox.git
